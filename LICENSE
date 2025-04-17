@@ -1,21 +1,80 @@
+---
+
+FILENAME: LICENSE
+
 MIT License
 
-Copyright (c) 2025 JulioBianor
+Copyright (c) 2025 [Seu Nome Aqui]
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+---
+
+FILENAME: .gitignore
+
+Arduino build files
+
+*.elf *.hex *.bin *.eep *.map *.d *.dep *.o *.out
+
+Build folders
+
+build/ *.tmp *.bak
+
+System files
+
+.DS_Store Thumbs.db desktop.ini
+
+IDE/editor folders
+
+.vscode/ .pio/
+
+
+---
+
+FILENAME: README.md
+
+SmartCapacitorTester
+
+SmartCapacitorTester é um capacímetro digital baseado em Arduino Pro Mini, com detecção automática de faixa, exibição em display ST7567 128x32 SPI e cálculo da referência comercial mais próxima do valor medido.
+
+Funcionalidades
+
+Medida automática de capacitância de ~1pF a 1000µF
+
+Detecção de faixas com 4 resistores em cascata (1k, 10k, 100k, 1M)
+
+Exibição do valor real medido (em pF, nF ou µF)
+
+Sugestão do valor comercial mais próximo
+
+Alerta se o componente for um indutor, resistor ou curto
+
+
+Hardware recomendado
+
+Arduino Pro Mini 5V
+
+Display ST7567 128x32 SPI
+
+4 resistores: 1k, 10k, 100k, 1M
+
+Pino de leitura: A4
+
+Resistores conectados em cascata: A0 -> A1 -> A2 -> A3 -> A4
+
+
+Licença
+
+Este projeto está licenciado sob a Licença MIT.
+
+Autor
+
+Projeto desenvolvido por [JulioBianor], com apoio de assistente IA OpenAI ChatGPT para estruturação de código, comentários e boas práticas.
+
+
+---
