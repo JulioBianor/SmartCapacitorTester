@@ -30,4 +30,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Author
 
-Developed by [JulioBianor], with support from OpenAI ChatGPT for structure, documentation, and embedded development best practices.
+Developed by [JulioBianor][https://github.com/JulioBianor], with support from OpenAI ChatGPT for structure, documentation, and embedded development best practices.
