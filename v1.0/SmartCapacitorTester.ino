@@ -15,7 +15,6 @@ float absFloat(float x){
   return x < 0 ? -x : x;
 }
 
-// Tabela de valores comerciais de capacitância (em Farads)
 const float valoresComerciais[] = {
   1e-12, 2.2e-12, 3.3e-12, 4.7e-12, 10e-12, 22e-12, 33e-12, 47e-12, 100e-12, 220e-12, 330e-12, 470e-12, 1e-9, 2.2e-9, 3.3e-9, 4.7e-9,
   10e-9, 22e-9, 33e-9, 47e-9, 100e-9, 220e-9, 330e-9, 470e-9, 1e-6, 2.2e-6, 3.3e-6, 4.7e-6, 10e-6, 22e-6, 33e-6, 47e-6, 100e-6
@@ -25,11 +24,11 @@ unsigned long trocaTimestamp = 0;
 bool usando10K = false;
 float capacitancia = 0.00;
 
-// Calcula C = t / R (t em us → s)
-float calcularCapacitancia(unsigned long tempo, float resistencia) {
-  const float fatorCalibracao = 4.464;
-  return (tempo / (resistencia * 1e6)) * fatorCalibracao;
-  //return (float)tempo / (resistencia * 1e6); // resultado em Farads
+// Calc C = t / R (t in us → s)
+float calcularCapacitancia(unsigned long time, float resistence) {
+  const float fatorCalib = 4.464;
+  return (time / (resistence * 1e6)) * fatorCalib;
+  //return (float)time / (resistence * 1e6); // resultado em Farads
 }
 
 
@@ -87,9 +86,9 @@ float medirCapacitancia() {
   // 1ª tentativa com 100k
   configurarCarga(PIN_100K);
   delayEstabilizacao();
-  unsigned long tempo = medirTempoCarga();
-  if (tempo > 0 && tempo < TIMEOUT_US) {
-    resultado = calcularCapacitancia(tempo, 100000.0);
+  unsigned long time = medirtimeCarga();
+  if (time > 0 && time < TIMEOUT_US) {
+    resultado = calcularCapacitancia(time, 100000.0);
     desligarTodos();
     return resultado;
   }
@@ -97,9 +96,9 @@ float medirCapacitancia() {
   // 2ª tentativa com 10k
   configurarCarga(PIN_10K);
   delayEstabilizacao();
-  tempo = medirTempoCarga();
-  if (tempo > 0 && tempo < TIMEOUT_US) {
-    resultado = calcularCapacitancia(tempo, 10000.0);
+  time = medirtimeCarga();
+  if (time > 0 && time < TIMEOUT_US) {
+    resultado = calcularCapacitancia(time, 10000.0);
     usando10K = true;
   }
 
@@ -123,7 +122,7 @@ void delayEstabilizacao() {
   while (millis() - trocaTimestamp < 3);
 }
 
-unsigned long medirTempoCarga() {
+unsigned long medirtimeCarga() {
   // Descarrega capacitor
   pinMode(PIN_ADC, OUTPUT);
   digitalWrite(PIN_ADC, LOW);
@@ -144,8 +143,8 @@ void exibeDisplay(){
 
   u8g2.clearBuffer();
   if (capacitancia < 0) {
-    u8g2.drawStr(0, 16, "Falha na medicao");
-    Serial.println("[!] Nao foi possivel medir");
+    u8g2.drawStr(0, 16, "Unable to measure");
+    Serial.println("[!] Unable to measure");
   } else {
     //char buffer[20];
     float valorRef = valorComercialMaisProximo(capacitancia);
