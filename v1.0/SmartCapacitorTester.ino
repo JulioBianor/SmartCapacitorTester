@@ -15,8 +15,8 @@ float absFloat(float x){
   return x < 0 ? -x : x;
 }
 
-const float commercialValues[] = { //can be expanded
-
+const float commercialValues[] = { 
+  //can be expanded
   //  1.0 1.2 1.5 1.8 2.2 2.7 3.3 3.9 4.7 5.6 6.8 8.2
   //  10  12  15  18  22  27  33  39  47  56  68  82
   //  100 120 150 180 220 270 330 390 470 560 680 820
@@ -45,7 +45,6 @@ float capacitancia = 0.00;
 float calcularCapacitancia(unsigned long time, float resistence) {
   const float fatorCalib = 4.464;
   return (time / (resistence * 1e6)) * fatorCalib;
-  //return (float)time / (resistence * 1e6); // resultado em Farads
 }
 
 
@@ -89,9 +88,9 @@ void setup() {
 void loop() {
   capacitancia = medirCapacitancia();
   exibeDisplay();
-  Serial.print("Capacitancia calculada: ");
-  Serial.println(capacitancia, 12); // for debug, by terminal
-
+  
+  Serial.print("C: ");
+  Serial.println(capacitancia, 12); // for terminal debug
   delay(1000);
 
 }
@@ -167,11 +166,11 @@ void exibeDisplay(){
     float valorRef = valorComercialMaisProximo(capacitancia);
     u8g2.setCursor(0,12);
     if (capacitancia < 1e-9){
-      u8g2.print( capacitancia * 1e12); u8g2.print("pF "); u8g2.print("  Ref: "); u8g2.print(valorRef * 1e12); u8g2.print(" pF");
+      u8g2.print( capacitancia * 1e12); u8g2.print("pF "); u8g2.print("  Ref: "); u8g2.print(valorRef * 1e12); u8g2.print("pF");
     }else if (capacitancia < 1e-6){
-      u8g2.print( capacitancia * 1e9); u8g2.print("nF "); u8g2.print("  Ref: "); u8g2.print(valorRef * 1e9); u8g2.print(" nF");
+      u8g2.print( capacitancia * 1e9); u8g2.print("nF "); u8g2.print("  Ref: "); u8g2.print(valorRef * 1e9); u8g2.print("nF");
     }else{
-      u8g2.print( capacitancia * 1e6); u8g2.print("uF "); u8g2.print("  Ref: "); u8g2.print(valorRef * 1e6); u8g2.print(" uF");
+      u8g2.print( capacitancia * 1e6); u8g2.print("uF "); u8g2.print("  Ref: "); u8g2.print(valorRef * 1e6); u8g2.print("uF");
     }
   }
   u8g2.sendBuffer();
