@@ -5,7 +5,7 @@
 ## Features
 
 - Automatic capacitance measurement from ~1pF to 1000µF
-- Smart range selection using 4 resistors in cascade (1k, 10k, 100k, 1M)
+- Smart range selection using 4 resistors (1k, 10k, 100k, 1M)
 - Displays accurate measured value (in pF, nF or µF)
 - Suggests the closest commercial standard capacitor value
 - Alerts when the component is likely an inductor, resistor, or short circuit
@@ -13,10 +13,8 @@
 ## Recommended Hardware
 
 - Arduino Pro Mini 5V
-- ST7567 128x32 SPI display
+- ST7567 128x32 SPI display (easy to modify for your hardware)
 - 4 precision resistors: 1kΩ, 10kΩ, 100kΩ, 1MΩ
-- Measurement pin: A4
-- Resistors connected in cascade: A0 → A1 → A2 → A3 → A4
 
 ## Usage
 
@@ -30,4 +28,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Author
 
-Developed by https://github.com/JulioBianor, with support from OpenAI ChatGPT for structure, documentation, and embedded development best practices.
+Developed by [JulioBianor](https://github.com/JulioBianor), with support from OpenAI ChatGPT for structure, documentation, and embedded development best practices.
