@@ -34,7 +34,7 @@ const float commercialValues[] = {
 //uF
   1e-6,    2.2e-6,  3.3e-6,  4.7e-6,
   10e-6,   22e-6,   33e-6,   47e-6,
-  100e-6   220e-6,  330e-6,  470e-6,
+  100e-6,  220e-6,  330e-6,  470e-6
 };
 
 unsigned long trocaTimestamp = 0;
