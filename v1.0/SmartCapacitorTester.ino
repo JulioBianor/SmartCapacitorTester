@@ -15,13 +15,30 @@ float absFloat(float x){
   return x < 0 ? -x : x;
 }
 
-const float valoresComerciais[] = {
-  1e-12, 2.2e-12, 3.3e-12, 4.7e-12, 10e-12, 22e-12, 33e-12, 47e-12, 100e-12, 220e-12, 330e-12, 470e-12, 1e-9, 2.2e-9, 3.3e-9, 4.7e-9,
-  10e-9, 22e-9, 33e-9, 47e-9, 100e-9, 220e-9, 330e-9, 470e-9, 1e-6, 2.2e-6, 3.3e-6, 4.7e-6, 10e-6, 22e-6, 33e-6, 47e-6, 100e-6
+const float commercialValues[] = { //can be expanded
+
+  //  1.0 1.2 1.5 1.8 2.2 2.7 3.3 3.9 4.7 5.6 6.8 8.2
+  //  10  12  15  18  22  27  33  39  47  56  68  82
+  //  100 120 150 180 220 270 330 390 470 560 680 820
+
+//pF
+  1e-12,   2.2e-12, 3.3e-12, 4.7e-12,
+  10e-12,  22e-12,  33e-12,  47e-12,
+  100e-12, 220e-12, 330e-12, 470e-12,
+
+//nF
+  1e-9,    2.2e-9,  3.3e-9,  4.7e-9,
+  10e-9,   22e-9,   33e-9,   47e-9,
+  100e-9,  220e-9,  330e-9,  470e-9,
+
+//uF
+  1e-6,    2.2e-6,  3.3e-6,  4.7e-6,
+  10e-6,   22e-6,   33e-6,   47e-6,
+  100e-6   220e-6,  330e-6,  470e-6,
 };
 
 unsigned long trocaTimestamp = 0;
-bool usando10K = false;
+bool using10K = false;
 float capacitancia = 0.00;
 
 // Calc C = t / R (t in us → s)
@@ -33,16 +50,16 @@ float calcularCapacitancia(unsigned long time, float resistence) {
 
 
 float valorComercialMaisProximo(float valorMedido) {
-  float maisProximo = valoresComerciais[0];
-  float menorErro = absFloat(valorMedido - maisProximo);
+  float maisProximo = commercialValues[0];
+  float minorError = absFloat(valorMedido - maisProximo);
 
-  const int NUM_VALORES = sizeof(valoresComerciais) / sizeof(valoresComerciais[0]);
+  const int NUM_VALORES = sizeof(commercialValues) / sizeof(commercialValues[0]);
 
   for (int i = 1; i < NUM_VALORES; i++) {
-    float erro = absFloat(valorMedido - valoresComerciais[i]);
-    if (erro < menorErro) {
-      menorErro = erro;
-      maisProximo = valoresComerciais[i];
+    float erro = absFloat(valorMedido - commercialValues[i]);
+    if (erro < minorError) {
+      minorError = erro;
+      maisProximo = commercialValues[i];
     }
   }
   return maisProximo;
@@ -52,7 +69,7 @@ float valorComercialMaisProximo(float valorMedido) {
 
 
 void setup() {
-  analogReference(INTERNAL);  // 1.1V
+  analogReference(INTERNAL);  // 1.1V, needed in Pro Mini Analog Read
   delay(50);
   Serial.begin(115200);
   u8g2.begin();
@@ -62,9 +79,9 @@ void setup() {
   pinMode(PIN_ADC, INPUT);
 
   u8g2.setFont(u8g2_font_6x13_tr);
-  u8g2.setContrast(35);
+  u8g2.setContrast(35); //optional
   u8g2.clearBuffer();
-  u8g2.drawStr(0, 16, "Capacimetro Automatico");
+  u8g2.drawStr(0, 16, "Smart Capacitor Tester v1.0");
   u8g2.sendBuffer();
   delay(1000);
 }
@@ -73,7 +90,7 @@ void loop() {
   capacitancia = medirCapacitancia();
   exibeDisplay();
   Serial.print("Capacitancia calculada: ");
-  Serial.println(capacitancia, 12); // Mostra até 12 casas decimais para investigar
+  Serial.println(capacitancia, 12); // for debug, by terminal
 
   delay(1000);
 
@@ -81,7 +98,7 @@ void loop() {
 
 float medirCapacitancia() {
   float resultado = -1;
-  usando10K = false;
+  using10K = false;
 
   // 1ª tentativa com 100k
   configurarCarga(PIN_100K);
@@ -99,7 +116,7 @@ float medirCapacitancia() {
   time = medirtimeCarga();
   if (time > 0 && time < TIMEOUT_US) {
     resultado = calcularCapacitancia(time, 10000.0);
-    usando10K = true;
+    using10K = true;
   }
 
   desligarTodos();
@@ -155,7 +172,6 @@ void exibeDisplay(){
       u8g2.print( capacitancia * 1e9); u8g2.print("nF "); u8g2.print("  Ref: "); u8g2.print(valorRef * 1e9); u8g2.print(" nF");
     }else{
       u8g2.print( capacitancia * 1e6); u8g2.print("uF "); u8g2.print("  Ref: "); u8g2.print(valorRef * 1e6); u8g2.print(" uF");
-      u8g2.drawStr(0, 28, usando10K ? "Faixa: 10K" : "Faixa: 100K");
     }
   }
   u8g2.sendBuffer();
