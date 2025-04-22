@@ -26,12 +26,12 @@ void setup() {
     analogReference(INTERNAL);
     calibrationFactor = CALIB_FACTOR_LOWVCC;
     lowVoltage = true;
-    Serial.println(F(">> Modo bateria: analogReference(INTERNAL), fator 4.64"));
+    Serial.println(F(">> VCC 3.3/4.7: analogReference(INTERNAL), factor 4.64"));
   } else {
     analogReference(DEFAULT);
     calibrationFactor = 1.0;
     lowVoltage = false;
-    Serial.println(F(">> Modo USB/5V: analogReference(DEFAULT), fator 1.0"));
+    Serial.println(F(">> VCC USB/5V: analogReference(DEFAULT), factor 1.0"));
   }
 
   pinMode(PIN_MEASURE, INPUT);
