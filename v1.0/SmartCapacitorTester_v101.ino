@@ -1,3 +1,5 @@
+//only serial, for debug, display will come soon
+
 #define PIN_MEASURE A0
 #define TIMEOUT_US 2000000
 #define ADC_THRESHOLD 648
@@ -61,11 +63,11 @@ void loop() {
 
   Serial.println(F("\n------------------------------"));
   if (capacitance > 0 && faixaUsada < 3) {
-    Serial.print(F("Resistor usado: "));
+    Serial.print(F("Resistor used: "));
     Serial.print(resistorValues[faixaUsada] / 1000);
-    Serial.print(F("kΩ | Tempo: "));
+    Serial.print(F("kΩ | Time: "));
     Serial.print(tempoMedido);
-    Serial.print(F(" us | Capacitância: "));
+    Serial.print(F(" us | Cap: "));
 
     if (capacitance < 1e-9) {
       Serial.print(capacitance * 1e12, 2);
@@ -78,13 +80,13 @@ void loop() {
       Serial.println(F(" uF"));
     }
   } else {
-    Serial.println(F("✖️ Medição inválida ou capacitor ausente."));
+    Serial.println(F("✖️ Invalid or without capacitor."));
   }
 
   delay(1000);
 }
 
-// === Funções auxiliares ===
+// === Functions ===
 
 void dischargeCapacitor() {
   deactivateAllResistors();
@@ -116,11 +118,11 @@ unsigned long measureChargeTime() {
 }
 
 long readVcc() {
-  // Lê a Vref interna de 1.1V usando VCC como referência
+  // Vref internal verification, using VCC
   ADMUX = _BV(REFS0) | _BV(MUX3) | _BV(MUX2) | _BV(MUX1);
   delay(2);
   ADCSRA |= _BV(ADSC);
   while (bit_is_set(ADCSRA, ADSC));
   int adc = ADC;
-  return (1100L * 1024L) / adc;  // Retorna em milivolts
+  return (1100L * 1024L) / adc;  // Return in milivolts
 }
