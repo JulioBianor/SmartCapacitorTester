@@ -54,6 +54,8 @@ void loop() {
       capacitance = (tempoMedido / (resistorValues[i] * 1e6)) * calibrationFactor;
       faixaUsada = i;
       break;
+    }else{
+      dischargeCapacitor(); //descarrega entre tentativas
     }
   }
 
