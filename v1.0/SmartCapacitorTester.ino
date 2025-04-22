@@ -1,7 +1,8 @@
 #include <U8g2lib.h>
 
-// Display ST7567 128x32 via SPI
-U8G2_ST7567_OS12864_F_4W_SW_SPI u8g2(U8G2_R2, /* clock=*/ 7, /* data=*/ 4, /* cs=*/ 2, /* dc=*/ 3, /* reset=*/ 8);
+// Display ST756X
+//U8G2_ST7567_OS12864_F_4W_SW_SPI u8g2(U8G2_R2, /* clock=*/ 7, /* data=*/ 4, /* cs=*/ 2, /* dc=*/ 3, /* reset=*/ 8);
+U8G2_ST7565_NHD_C12832_F_4W_SW_SPI u8g2(U8G2_R2, /* clock=*/ 7, /* data=*/ 4, /* cs=*/ 2, /* dc=*/ 3, /* reset=*/ 8);
 
 // Pinos
 #define PIN_100K A0
