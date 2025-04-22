@@ -18,7 +18,7 @@
 
 ## Usage
 
-Connect the capacitor to be tested between A4 and GND.  
+Connect the capacitor to be tested between A0 and GND.  
 The circuit will automatically select the most appropriate resistor to measure the charge time and calculate the capacitance.  
 Values are shown both on the display and via the Serial Monitor.
 
